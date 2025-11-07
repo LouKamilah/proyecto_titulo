@@ -177,7 +177,7 @@ $cargas = $cargaController->listarCargas();
                                             </td>
                                             <td class="size-px whitespace-nowrap">
                                                 <div class="px-6 py-2">
-                                                    <a href="../../views/operador/vista_sacos.php?id_carga=<?= $c['id_carga']; ?>"
+                                                    <a href="../../views/calidad/calidad_sacos.php?id_carga=<?= $c['id_carga']; ?>"
                                                         class="font-semibold text-sm bg-blue-600 text-white px-5 py-1.5 rounded hover:bg-blue-700">
                                                         Detalles
                                                     </a>
@@ -196,10 +196,6 @@ $cargas = $cargaController->listarCargas();
                                 <div
                                     class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-20r">
                                     <div>
-                                        <p class="text-sm text-gray-600 ">
-                                            <span class="font-semibold text-gray-800 ">6</span>
-                                            results
-                                        </p>
                                     </div>
 
                                     <div>

@@ -5,28 +5,17 @@ require_once __DIR__ . '/../libs/phpqrcode/qrlib.php';
 
 class QrController {
     public function generarQR($id_carga) {
-        $cargaModel = new Carga();
-        $sacoModel = new Saco();
-
-        // Obtenemos datos de la carga y los sacos asociados
-        $carga = $cargaModel->obtenerCargaPorId($id_carga);
-        $sacos = $sacoModel->obtenerSacosPorCarga($id_carga);
-
-        if (!$carga) {
-            throw new Exception("Carga no encontrada");
-        }
-
-        // Estructuramos los datos para el QR
+        // Solo codificamos el ID de la carga (mucho más liviano)
         $data = [
-            'carga' => $carga,
-            'sacos' => $sacos,
+            'id_carga' => intval($id_carga),
             'timestamp' => date('Y-m-d H:i:s')
         ];
 
-        // Convertimos a JSON
-        $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception('Error al codificar JSON: ' . json_last_error_msg());
+        }
 
-        // Ruta donde se guardará el QR
         $dir = __DIR__ . '/../../public/assets/img/';
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
@@ -34,25 +23,22 @@ class QrController {
 
         $filename = $dir . "qr_carga_" . $id_carga . ".png";
 
-        // Generamos el código QR
-        QRcode::png($jsonData, $filename, QR_ECLEVEL_L, 4);
+        // Generamos el QR (escala 8 para que sea más grande y legible)
+        QRcode::png($jsonData, $filename, QR_ECLEVEL_L, 8);
 
         return basename($filename);
     }
 }
 
-// --------------------------------------
-// Evitar que el QR se genere automáticamente
-// --------------------------------------
-// Solo generamos el QR si viene explícitamente con "action=generate"
-
+// Endpoint directo para generar QR
 if (isset($_GET['action']) && $_GET['action'] === 'generate' && isset($_GET['id_carga'])) {
+    header('Content-Type: application/json; charset=utf-8');
     try {
         $controller = new QrController();
         $filename = $controller->generarQR($_GET['id_carga']);
-        header("Location: ../../public/assets/img/$filename");
-        exit;
+        echo json_encode(["qr" => "../../public/assets/img/$filename"]);
     } catch (Exception $e) {
-        echo "Error generando QR: " . $e->getMessage();
+        echo json_encode(["error" => $e->getMessage()]);
     }
+    exit;
 }

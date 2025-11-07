@@ -3,12 +3,13 @@ require_once __DIR__ . '/conexion.php';
 require_once __DIR__ . '/../libs/phpqrcode/qrlib.php';
 
 class Saco {
-    private $db;
+    public $db;
 
     public function __construct() {
         $con = new Conectar();
         $this->db = $con->conexion;
     }
+
 
     // Crear un nuevo saco
 public function crearSaco($fecha_elaboracion, $lote, $humedad, $temperatura, $kilos, $id_carga, $id_operador) {
@@ -32,6 +33,19 @@ public function crearSaco($fecha_elaboracion, $lote, $humedad, $temperatura, $ki
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? (int)$result['total'] : 0;
     }
+
+    public function actualizarSacoCalidad($id_saco, $fecha_elaboracion, $lote, $humedad, $temperatura, $kilos) {
+    $sql = "UPDATE saco 
+            SET fecha_elaboracion = ?, lote = ?, humedad = ?, temperatura = ?, kilos = ?
+            WHERE id_saco = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$fecha_elaboracion, $lote, $humedad, $temperatura, $kilos, $id_saco]);
+}
+
+public function getDb() {
+    return $this->db;
+}
+
 
 
 }

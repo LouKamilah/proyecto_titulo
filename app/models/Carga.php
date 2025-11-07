@@ -2,7 +2,7 @@
 require_once __DIR__ . '/conexion.php';
 
 class Carga {
-    private $db;
+    public $db;
 
     public function __construct() {
         $con = new Conectar();
@@ -63,6 +63,13 @@ class Carga {
     $stmt = $this->db->prepare("UPDATE carga SET estado_actual = ? WHERE id_carga = ?");
     return $stmt->execute([$nuevoEstado, $id_carga]);
 }
+
+public function actualizarResultadoQA($id_carga, $resultado) {
+    $sql = "UPDATE carga SET resultado_qa = ? WHERE id_carga = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$resultado, $id_carga]);
+}
+
 
 
 }

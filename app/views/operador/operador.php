@@ -194,18 +194,15 @@ $cargas = $cargaController->listarCargas();
 
                                 <!-- Footer -->
                                 <div
-                                    class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-20r">
+                                    class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-20r ">
                                     <div>
-                                        <p class="text-sm text-gray-600 ">
-                                            <span class="font-semibold text-gray-800 ">6</span>
-                                            results
-                                        </p>
+
                                     </div>
 
                                     <div>
                                         <div class="inline-flex gap-x-2">
                                             <button type="button"
-                                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none    ">
+                                                class="cursor-pointer py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none    ">
                                                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
                                                     width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -216,7 +213,7 @@ $cargas = $cargaController->listarCargas();
                                             </button>
 
                                             <button type="button"
-                                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none    ">
+                                                class="cursor-pointer py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none    ">
                                                 Next
                                                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
                                                     width="24" height="24" viewBox="0 0 24 24" fill="none"

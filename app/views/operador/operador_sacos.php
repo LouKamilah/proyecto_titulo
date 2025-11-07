@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$completado) {
     $controller->crearSaco($fecha_elaboracion, $lote, $humedad, $temperatura, $kilos, $id_carga, $id_operador);
 
     // Redirección con JavaScript (evita errores de rutas relativas)
-    echo "<script>window.location.href='sacos_operador.php?id_carga=$id_carga';</script>";
+    echo "<script>window.location.href='operador_sacos.php?id_carga=$id_carga';</script>";
     exit;
 }
 

@@ -15,9 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $usuarioModel->verifyCredentials($usuario, $password);
 
     if ($user) {
-        $_SESSION['user'] = $user;
+        // Buscar el id_empleado asociado a este login
+        $idEmpleado = $usuarioModel->findEmpleadoIdByLogin($user['id_login']);
 
-        // Redirección directa a la vista del rol
+        $_SESSION['user'] = [
+            'id_usu' => $user['id_login'],
+            'id_empleado' => $idEmpleado, // <-- lo añadimos a la sesión
+            'usuario' => $user['usuario'],
+            'tipo_usu' => $user['tipo_usu']
+        ];
+
+        // Redirección directa
         switch ($user['tipo_usu']) {
             case 'Operador':
                 header('Location: ../views/operador/operador.php');

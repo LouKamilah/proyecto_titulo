@@ -39,14 +39,52 @@ $user = $_SESSION['user'];
         <input type="hidden" name="id_carga" id="id_carga" value="">
 
         <div class="flex items-center gap-4 mt-4">
-            <label class="font-semibold">Resultado QA:</label>
-            <label><input type="radio" class="form-radio" name="resultado_qa" value="Aprobado" required>
-                Aprobado</label>
-            <label><input type="radio" class="form-radio" name="resultado_qa" value="Rechazado"> Rechazado</label>
+            <label class="flex items-center gap-2">
+                <input type="radio" class="form-radio" name="resultado_qa" value="Aprobado" required>
+                <span>Aprobado</span>
+            </label>
+
+            <label class="flex items-center gap-2">
+                <input type="radio" class="form-radio" name="resultado_qa" value="Rechazado" required>
+                <span>Rechazado</span>
+            </label>
+
+            <!-- Select de motivo rechazo -->
+            <select name="motivo_rechazo" id="motivo_rechazo" class="border rounded p-2" disabled required>
+                <option value="">Selecciona un motivo</option>
+                <option value="Error de humedad">Error de humedad</option>
+                <option value="Error de peso">Error de peso</option>
+                <option value="Saco defectuoso">Saco defectuoso</option>
+                <option value="Resultado muestreo">Resultado muestreo</option>
+                <option value="Error de etiqueta">Error de etiqueta</option>
+            </select>
+        </div>
+
+        <!-- NUEVO: Código de muestreo -->
+        <div class="mt-4">
+            <label for="codigo_muestreo" class="block font-semibold mb-1">Código de Muestreo:</label>
+            <input type="number" name="codigo_muestreo" id="codigo_muestreo" class="border rounded p-2 w-full"
+                placeholder="Ingrese código de muestreo" required>
+        </div>
+
+
+        <!-- NUEVO: Observaciones QA -->
+        <div class="mt-4">
+            <label for="observaciones_qa" class="block font-semibold mb-1">Observaciones QA:</label>
+            <textarea name="observaciones_qa" id="observaciones_qa" maxlength="255"
+                placeholder="Escribe observaciones generales sobre la carga..."
+                class="border rounded p-2 w-full h-24 resize-none"></textarea>
         </div>
 
         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded w-full mt-4">Guardar Resultados</button>
     </form>
+
+    <script>
+    const idCargaUrl = new URLSearchParams(window.location.search).get('id_carga');
+    if (idCargaUrl) {
+        document.getElementById('id_carga').value = idCargaUrl;
+    }
+    </script>
 
 
     <script>
@@ -166,6 +204,34 @@ $user = $_SESSION['user'];
         }
     });
     </script>
+
+    <!-- Manejo del select de motivo de rechazo -->
+    <script>
+    const radios = document.querySelectorAll('input[name="resultado_qa"]');
+    const motivoSelect = document.getElementById('motivo_rechazo');
+
+    motivoSelect.style.opacity = '0.5';
+    motivoSelect.style.pointerEvents = 'none';
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'Rechazado' && radio.checked) {
+                motivoSelect.disabled = false;
+                motivoSelect.required = true;
+                motivoSelect.style.opacity = '1';
+                motivoSelect.style.pointerEvents = 'auto';
+            } else {
+                motivoSelect.disabled = true;
+                motivoSelect.required = false;
+                motivoSelect.value = '';
+                motivoSelect.style.opacity = '0.5';
+                motivoSelect.style.pointerEvents = 'none';
+            }
+        });
+    });
+    </script>
+
+
 </body>
 
 </html>

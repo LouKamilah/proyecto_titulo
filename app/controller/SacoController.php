@@ -33,14 +33,27 @@ public function crearSaco($fecha_elaboracion, $lote, $humedad, $temperatura, $ki
     // Si ya se completaron todos los sacos, actualizar estado_actual a "Calidad"
     if ($completado) {
         $this->cargaModel->actualizarEstado($id_carga, 'Calidad');
+            $fecha_finalizacion = date('Y-m-d');
+            $hora_finalizacion = date('H:i:s');
+
+            $stmt = $this->cargaModel->getDb()->prepare("
+                UPDATE carga
+                SET fecha_finalizacion_operador = ?, 
+                    hora_finalizacion_operador = ?
+                WHERE id_carga = ?
+            ");
+            $stmt->execute([
+                $fecha_finalizacion,
+                $hora_finalizacion,
+                $id_carga
+            ]);
+        }
+
+        return [
+            'success' => true,
+            'completado' => $completado,
+            'sacosActuales' => $sacosActualizados,
+            'sacosAsignados' => $carga['sacos_asignados']
+        ];
     }
-
-    return [
-        'success' => true,
-        'completado' => $completado,
-        'sacosActuales' => $sacosActualizados,
-        'sacosAsignados' => $carga['sacos_asignados']
-    ];
-}
-
 }

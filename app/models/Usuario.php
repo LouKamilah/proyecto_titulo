@@ -16,6 +16,14 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // obtener el id_empleado vinculado al id_login
+    public function findEmpleadoIdByLogin(int $id_login) {
+        $stmt = $this->db->prepare("SELECT id_empleado FROM empleados WHERE id_login = ? LIMIT 1");
+        $stmt->execute([$id_login]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $row['id_empleado'] : null;
+    }
+
     // Verificar credenciales (texto plano)
     public function verifyCredentials(string $usuario, string $password) {
         $user = $this->findByUsuario($usuario);

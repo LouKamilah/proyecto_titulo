@@ -2,11 +2,14 @@
 require_once __DIR__ . '/conexion.php';
 
 class Carga {
-    public $db;
+    protected $db;
 
     public function __construct() {
-        $con = new Conectar();
-        $this->db = $con->conexion;
+        $this->db = (new Conectar())->conexion;
+    }
+
+    public function getDb() {
+        return $this->db;
     }
 
     // Obtener todas las cargas activas con el nombre del cliente

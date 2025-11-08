@@ -3,11 +3,14 @@ require_once __DIR__ . '/conexion.php';
 require_once __DIR__ . '/../libs/phpqrcode/qrlib.php';
 
 class Saco {
-    public $db;
+    protected $db;
 
     public function __construct() {
-        $con = new Conectar();
-        $this->db = $con->conexion;
+        $this->db = (new Conectar())->conexion;
+    }
+
+    public function getDb() {
+        return $this->db;
     }
 
 
@@ -41,11 +44,6 @@ public function crearSaco($fecha_elaboracion, $lote, $humedad, $temperatura, $ki
     $stmt = $this->db->prepare($sql);
     $stmt->execute([$fecha_elaboracion, $lote, $humedad, $temperatura, $kilos, $id_saco]);
 }
-
-public function getDb() {
-    return $this->db;
-}
-
 
 
 }

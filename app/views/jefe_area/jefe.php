@@ -17,7 +17,7 @@ $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sacos_asignados = $_POST['sacos_asignados'];
     $id_cliente = $_POST['id_cliente'];
-    $id_jefeArea_responsable = $user['id_login']; // viene desde la sesión (login)
+    $id_jefeArea_responsable = $user['id_usu']; 
 
     if ($cargaController->crearCarga($sacos_asignados, $id_cliente, $id_jefeArea_responsable)) {
         $mensaje = "✅ Carga creada correctamente.";

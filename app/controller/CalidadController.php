@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sacos'])) {
         ]);
     }
 
+
     // Determinamos resultado QA
     $resultado = '';
     if (isset($_POST['resultado_qa']) && in_array($_POST['resultado_qa'], ['Aprobado', 'Rechazado'])) {
@@ -77,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sacos'])) {
         $hora_finalizacion,
         $id_carga
     ]);
+
+    
 
     header("Location: ../../app/views/calidad/calidad.php?id_carga=$id_carga&success=1");
     exit;

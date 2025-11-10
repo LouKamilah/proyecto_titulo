@@ -20,12 +20,17 @@ class CargaController {
         return $this->cargaModel->crearCarga($sacos_asignados, $id_cliente, $id_jefeArea_responsable);
     }
 
+    public function finalizarDespacho($id_carga, $responsable_traslado, $patente_camion, $observaciones, $id_despacho_responsable) {
+    return $this->cargaModel->finalizarDespacho($id_carga, $responsable_traslado, $patente_camion, $observaciones, $id_despacho_responsable);
+    }
+
+
     public function obtenerCargaPorId($id_carga) {
         $db = (new Conectar())->conexion;
         $stmt = $db->prepare("
             SELECT c.*, cl.nombre_cliente
             FROM carga c
-            INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente
+            INNER JOIN cliente cl ON c.id_cliente = cl.id_cliente
             WHERE c.id_carga = ?
         ");
         $stmt->execute([$id_carga]);
@@ -47,6 +52,7 @@ class CargaController {
         ];
     }
 }
+
 
 // Endpoint de API (para el fetch desde JS)
 if (isset($_GET['action']) && $_GET['action'] === 'getCarga') {

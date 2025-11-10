@@ -177,7 +177,7 @@ $cargas = $cargaController->listarCargas();
                                             </td>
                                             <td class="size-px whitespace-nowrap">
                                                 <div class="px-6 py-2">
-                                                    <a href="../../views/calidad/calidad_sacos.php?id_carga=<?= $c['id_carga']; ?>"
+                                                    <a href="../../views/despacho/despacho_sacos.php?id_carga=<?= $c['id_carga']; ?>"
                                                         class="font-semibold text-sm bg-blue-600 text-white px-5 py-1.5 rounded hover:bg-blue-700">
                                                         Detalles
                                                     </a>

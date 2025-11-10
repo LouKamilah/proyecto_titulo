@@ -67,11 +67,33 @@ class Carga {
     return $stmt->execute([$nuevoEstado, $id_carga]);
 }
 
-public function actualizarResultadoQA($id_carga, $resultado) {
-    $sql = "UPDATE carga SET resultado_qa = ? WHERE id_carga = ?";
+    public function actualizarResultadoQA($id_carga, $resultado) {
+        $sql = "UPDATE carga SET resultado_qa = ? WHERE id_carga = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$resultado, $id_carga]);
+    }
+
+    public function finalizarDespacho($id_carga, $responsable_traslado, $patente_camion, $observaciones, $id_despacho_responsable) {
+    $sql = "UPDATE carga 
+            SET responsable_traslado = ?, 
+                patente_camion = ?, 
+                observaciones_despacho = ?, 
+                id_despacho_responsable = ?, 
+                fecha_finalizacion_despacho = CURRENT_DATE(), 
+                hora_finalizacion_despacho = CURRENT_TIME(),
+                estado_actual = 'Finalizado'
+            WHERE id_carga = ?";
+
     $stmt = $this->db->prepare($sql);
-    $stmt->execute([$resultado, $id_carga]);
+    return $stmt->execute([
+        $responsable_traslado,
+        $patente_camion,
+        $observaciones,
+        $id_despacho_responsable,
+        $id_carga
+    ]);
 }
+
 
 
 
